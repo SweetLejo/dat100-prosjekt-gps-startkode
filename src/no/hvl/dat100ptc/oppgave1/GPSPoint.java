@@ -4,8 +4,8 @@ import no.hvl.dat100ptc.TODO;
 
 public class GPSPoint {
 
-	// TODO - objektvariable
-		
+
+
 	public GPSPoint(int time, double latitude, double longitude, double elevation) {
 
 		// TODO - konstruktør
