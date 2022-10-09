@@ -57,7 +57,12 @@ public class ShowRoute extends EasyGraphics {
 		
 		// TODO - START
 		
-		throw new UnsupportedOperationException(TODO.method());
+		double maxlat = GPSUtils.findMax(GPSUtils.getLatitudes(gpspoints));
+		double minlat = GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
+		
+		ystep = MAPYSIZE / (Math.abs(maxlat - minlat));
+		
+		return ystep;
 
 		// TODO - SLUTT
 		
@@ -67,7 +72,17 @@ public class ShowRoute extends EasyGraphics {
 
 		// TODO - START
 		
-		throw new UnsupportedOperationException(TODO.method());
+		int size = ((int)xstep() * (int)ystep()) / 2; 
+		
+		setColor(0,0,255);
+		
+		for (GPSPoint i : gpspoints) {
+			int lon = ((int)xstep() * (int)i.getLongitude()) + MARGIN;
+			int lat = ((int)ystep() * (int)i.getLatitude()) + ybase;
+			
+			drawCircle(lon,lat,size);
+			pause(10);
+		}
 		
 		// TODO - SLUTT
 	}
@@ -81,7 +96,21 @@ public class ShowRoute extends EasyGraphics {
 		
 		// TODO - START
 		
-		throw new UnsupportedOperationException(TODO.method());
+		double weight = 80.00;
+		
+		String timeStr =      "Total time     : " + GPSUtils.formatTime(gpscomputer.totalTime());; 
+		String distanceStr =  "Total distance : " + GPSUtils.formatDouble(gpscomputer.totalDistance()) + " km";
+		String elevationStr = "Total elevation: " + GPSUtils.formatDouble(gpscomputer.totalElevation()) + " m";
+		String maxspeedStr =  "Max speed      : " + GPSUtils.formatDouble(gpscomputer.maxSpeed()) + " km/t";
+		String avgspeedStr =  "Average speed  : " + GPSUtils.formatDouble(gpscomputer.averageSpeed()) + "kmt/t";
+		String energyStr =    "Energy         : " + GPSUtils.formatDouble(gpscomputer.totalKcal(weight)) + "kcal";		
+		
+		drawString(timeStr,MARGIN,MAPYSIZE - TEXTDISTANCE);
+		drawString(distanceStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 2));
+		drawString(elevationStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 3));
+		drawString(maxspeedStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 4));
+		drawString(avgspeedStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 5));
+		drawString(energyStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 6));
 		
 		// TODO - SLUTT;
 	}
