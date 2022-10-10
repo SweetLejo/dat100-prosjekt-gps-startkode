@@ -50,7 +50,25 @@ public class ShowSpeed extends EasyGraphics {
 
 		// TODO - START
 		
-		throw new UnsupportedOperationException(TODO.method());
+		int i = 0;
+		int speedsum = 0;
+		
+		while (i < N) {
+			int speed = (int)speeds[i];
+			
+			setColor(0,0,255);
+			drawLine(x,ybase,x,speed);
+			
+			i++;
+			speedsum += speed;
+			int avgspeed = speedsum / i;
+			
+			setColor(0,255,0);
+			drawLine(MARGIN,avgspeed,x,avgspeed);
+			
+			x++;
+			pause(10);
+		}
 	
 		// TODO - SLUTT
 	}
