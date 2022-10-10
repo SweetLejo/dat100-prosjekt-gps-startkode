@@ -53,6 +53,7 @@ public class GPSPoint {
         this.elevation = elevation;
     }
 
+    @Override
     public String toString() {
         return this.time + " (" + this.latitude + "," + this.longitude + ") " + this.elevation + "\n";
     }
