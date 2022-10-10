@@ -35,12 +35,13 @@ public class GPSDataConverter {
 
 		GPSPoint gpspoint;
 
-		// TODO - START ;
-		
-		throw new UnsupportedOperationException(TODO.method());
+		int time = toSeconds(timeStr);
+		double latitude = Double.parseDouble(latitudeStr);
+		double longitude = Double.parseDouble(longitudeStr);
+		double elevation = Double.parseDouble(elevationStr);
 
-		// OPPGAVE - SLUTT ;
-	    
+		return new GPSPoint(time, latitude, longitude, elevation);
+
 	}
 	
 }
