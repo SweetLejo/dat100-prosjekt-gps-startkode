@@ -97,7 +97,7 @@ public class GPSUtils {
 		int minutes = (secs % 3600) / 60;
 		int sec = secs % 60;
 
-		timestr = String.format("  %02d:%02d:%02d", hours, minutes, sec);
+		timestr = String.format("%2s%02d:%02d:%02d"," ", hours, minutes, sec);
 		
 		return timestr;
 	}
@@ -105,9 +105,9 @@ public class GPSUtils {
 
 	public static String formatDouble(double d) {
 
-		DecimalFormat f = new DecimalFormat("##.00");
 
-		return String.format(f.format(d));
-
+		String formattedDub = String.format("%.2f", d);
+		TEXTWIDTH = TEXTWIDTH - formattedDub.length();
+		return String.format("%" +TEXTWIDTH+"s" + formattedDub, " ");
 	}
 }
