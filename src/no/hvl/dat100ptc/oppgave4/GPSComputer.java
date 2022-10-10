@@ -149,5 +149,26 @@ public class GPSComputer {
 		// TODO - SLUTT
 		
 	}
+	
+	public double[] climbs() {
+		
+		double[] inclines = new double[gpspoints.length - 1];
+		
+		for(int i = 0; i < inclines.length; i++) {
+			double elevation = gpspoints[i+1].getElevation() + gpspoints[i].getElevation();
+			double distance = GPSUtils.distance(gpspoints[i], gpspoints[i+1]);
+			
+			inclines[i] = elevation / distance;
+		}
+		
+		return inclines;
+	}
+	
+	public double maxClimb() {
+		
+		double maxincline = GPSUtils.findMax(climbs());
+		
+		return maxincline;
+	}
 
 }

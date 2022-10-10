@@ -46,22 +46,24 @@ public class ShowProfile extends EasyGraphics {
 		// ybase indicates the position on the y-axis where the columns should start
 	
 		int x = MARGIN,y;
-
-		// TODO - START
 		
+		int timescale = Integer.parseInt(getText("Tidskalering: "));
+
 		setColor(0,0,255);
 
-		for (GPSPoint i : gpspoints) {
-			int height = (int)i.getElevation();
+		for (int i = 0; i < gpspoints.length; i++) {
+			int elevation = (int)gpspoints[i].getElevation();
 			
-			if (height>0) 
-				drawLine(x,ybase,x,height);
-			
+			if (elevation>0) 
+				drawLine(x,ybase,x,elevation);
 			x++;
-			pause(10);
+			
+			if (i < gpspoints.length - 1) {
+				int pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) * 10 / timescale;
+				pause(pausetime);
+			}
 		}
 	
-		// TODO - SLUTT
 	}
 
 }

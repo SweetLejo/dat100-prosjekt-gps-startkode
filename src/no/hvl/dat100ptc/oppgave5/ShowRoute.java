@@ -52,39 +52,43 @@ public class ShowRoute extends EasyGraphics {
 
 	// antall y-pixels per breddegrad
 	public double ystep() {
-	
-		double ystep;
-		
-		// TODO - START
 		
 		double maxlat = GPSUtils.findMax(GPSUtils.getLatitudes(gpspoints));
 		double minlat = GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
 		
-		ystep = MAPYSIZE / (Math.abs(maxlat - minlat));
+		double ystep = MAPYSIZE / (Math.abs(maxlat - minlat));
 		
-		return ystep;
-
-		// TODO - SLUTT
-		
+		return ystep;	
 	}
 
 	public void showRouteMap(int ybase) {
-
-		// TODO - START
 		
 		int size = ((int)xstep() * (int)ystep()) / 2; 
 		
-		setColor(0,0,255);
+		setColor(0,255,0);
 		
-		for (GPSPoint i : gpspoints) {
-			int lon = ((int)xstep() * (int)i.getLongitude()) + MARGIN;
-			int lat = ((int)ystep() * (int)i.getLatitude()) + ybase;
-			
-			drawCircle(lon,lat,size);
-			pause(10);
+		for (int i = 0; i < gpspoints.length; i++) {
+			int lon1 = ((int)xstep() * (int)gpspoints[i-1].getLongitude()) + MARGIN;
+			int lat1 = ((int)ystep() * (int)gpspoints[i-1].getLatitude()) + ybase;		
+			int lon2 = ((int)xstep() * (int)gpspoints[i].getLongitude()) + MARGIN;
+			int lat2 = ((int)ystep() * (int)gpspoints[i].getLatitude()) + ybase;	
+				
+			drawLine(lon1,lat1,lon2,lat2);
 		}
 		
-		// TODO - SLUTT
+		setColor(0,0,255);
+		
+		int lon = ((int)xstep() * (int)gpspoints[0].getLongitude()) + MARGIN;
+		int lat = ((int)ystep() * (int)gpspoints[0].getLatitude()) + ybase;	
+		
+		int pos = fillCircle(lon,lat,size);
+		
+		for (int i = 1; i < gpspoints.length; i++) {
+			lon = ((int)xstep() * (int)gpspoints[i].getLongitude()) + MARGIN;
+			lat = ((int)ystep() * (int)gpspoints[i].getLatitude()) + ybase;	
+			
+			moveCircle(pos,lon,lat);
+		}
 	}
 
 	public void showStatistics() {
@@ -94,7 +98,6 @@ public class ShowRoute extends EasyGraphics {
 		setColor(0,0,0);
 		setFont("Courier",12);
 		
-		// TODO - START
 		
 		double weight = 80.00;
 		
@@ -112,7 +115,6 @@ public class ShowRoute extends EasyGraphics {
 		drawString(avgspeedStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 5));
 		drawString(energyStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 6));
 		
-		// TODO - SLUTT;
 	}
 
 }
