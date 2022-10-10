@@ -5,6 +5,8 @@ import static java.lang.Math.*;
 import no.hvl.dat100ptc.TODO;
 import no.hvl.dat100ptc.oppgave1.GPSPoint;
 
+import java.text.DecimalFormat;
+
 public class GPSUtils {
 
 	public static double findMax(double[] da) {
@@ -103,13 +105,9 @@ public class GPSUtils {
 
 	public static String formatDouble(double d) {
 
-		String str;
+		DecimalFormat f = new DecimalFormat("##.00");
 
-		// TODO - START
+		return String.format(f.format(d));
 
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - SLUTT
-		
 	}
 }
