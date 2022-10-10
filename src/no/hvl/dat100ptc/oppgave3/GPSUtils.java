@@ -24,14 +24,11 @@ public class GPSUtils {
 
 	public static double findMin(double[] da) {
 
-		double min;
-
-		// TODO - START
-
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - SLUT
-
+		double min = da[0];
+		for(double itNum : da){
+			min = Math.min(min,itNum); // had ```min = itNum < min? itNum : min;``` at first but there is a built in math method
+		}
+		return min;
 	}
 
 	public static double[] getLatitudes(GPSPoint[] gpspoints) {
@@ -45,12 +42,12 @@ public class GPSUtils {
 
 	public static double[] getLongitudes(GPSPoint[] gpspoints) {
 
-		// TODO - START
+		double[] longitudeArr = new double[gpspoints.length];
 
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - SLUTT
-
+		for(int i = 0; i < gpspoints.length; i++){
+			longitudeArr[i] = gpspoints[i].getLongitude();
+		}
+		return longitudeArr;
 	}
 
 	private static int R = 6371000; // jordens radius
