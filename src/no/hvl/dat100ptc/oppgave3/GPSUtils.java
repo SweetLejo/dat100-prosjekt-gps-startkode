@@ -91,21 +91,13 @@ public class GPSUtils {
 		String timestr;
 		String TIMESEP = ":";
 
-		int hours = (secs - (secs % 3600)) / 3600;
-		int minutes = (secs - hours*3600 - (secs % 60)) / 60;
-		int sec = secs - (hours * 3600 + minutes * 60);
+		int hours = secs / 3600;
+		int minutes = (secs % 3600) / 60;
+		int sec = secs % 60;
 
-		String strHours = Integer.toString(hours);
-		String strMin = Integer.toString(minutes);
-		String strSec = Integer.toString(sec);
-
-		strHours = strHours.length() == 1 ? 0 + strHours : strHours;
-		strMin = strMin.length() == 1 ? 0 + strMin : strMin;
-		strSec = strSec.length() == 1 ? 0 + strSec : strSec;
-
-		timestr = strHours + TIMESEP + strMin + TIMESEP + strSec;
-
-		return "  " + timestr;
+		timestr = String.format("  %02d:%02d:%02d", hours, minutes, sec);
+		
+		return timestr;
 	}
 	private static int TEXTWIDTH = 10;
 
