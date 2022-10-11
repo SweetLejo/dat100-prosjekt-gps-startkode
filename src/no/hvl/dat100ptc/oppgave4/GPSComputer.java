@@ -34,6 +34,7 @@ public class GPSComputer {
 		for(int i = 0; i < gpspoints.length-1; i+=2){
 			distance += GPSUtils.distance(gpspoints[i], gpspoints[i+1]);
 		}
+		System.out.println("hello");
 		return distance;
 	}
 
