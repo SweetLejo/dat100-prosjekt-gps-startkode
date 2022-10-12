@@ -7,6 +7,8 @@ import no.hvl.dat100ptc.oppgave2.GPSDataConverter;
 import no.hvl.dat100ptc.oppgave2.GPSDataFileReader;
 import no.hvl.dat100ptc.oppgave3.GPSUtils;
 
+import java.util.Arrays;
+
 public class GPSComputer {
 	
 	private GPSPoint[] gpspoints;
@@ -31,10 +33,10 @@ public class GPSComputer {
 
 		double distance = 0;
 
-		for(int i = 0; i < gpspoints.length-1; i+=2){
+		for(int i = 0; i < gpspoints.length-1; i++){
 			distance += GPSUtils.distance(gpspoints[i], gpspoints[i+1]);
 		}
-		System.out.println("hello");
+
 		return distance;
 	}
 
@@ -43,55 +45,52 @@ public class GPSComputer {
 
 		double elevation = 0;
 
-		// TODO - START
-
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - SLUTT
+		for(int i = 1; i < gpspoints.length; i ++){
+			double elevationDiff = gpspoints[i].getElevation()-gpspoints[i-1].getElevation();
+			elevation = elevationDiff > 0 ? elevation + elevationDiff : elevation;
+		}
+		return elevation;
 
 	}
 
 	// beregn total tiden for hele turen (i sekunder)
 	public int totalTime() {
 
-		throw new UnsupportedOperationException(TODO.method());
-
+		/* uncomment if list is not sorted after time
+		Arrays.sort(gpspoints,
+				(a, b) -> {
+					return (a.getTime() < b.getTime()? a : b).getTime();
+				});
+		*/
+		return gpspoints[gpspoints.length-1].getTime() - gpspoints[0].getTime();
 	}
 		
 	// beregn gjennomsnitshastighets mellom hver av gps punktene
 
 	public double[] speeds() {
 		
-		// TODO - START		// OPPGAVE - START
-		
-		throw new UnsupportedOperationException(TODO.method());
+		double[] speeds = new double[gpspoints.length-1];
 
-		// TODO - SLUTT
-
+		for(int i =1; i < gpspoints.length; i++){
+			speeds[i-1] += GPSUtils.speed(gpspoints[i-1], gpspoints[i]);
+		}
+		return speeds;
 	}
 	
 	public double maxSpeed() {
 		
-		double maxspeed = 0;
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - SLUTT
-		
+		return GPSUtils.findMax(speeds());
+
 	}
 
 	public double averageSpeed() {
-
+		double[] heyhey = speeds();
 		double average = 0;
-		
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - SLUTT
-		
+		for(double i : heyhey){
+			average += i;
+		}
+
+		return Arrays.stream(heyhey).sum() / heyhey.length;
 	}
 
 	/*
