@@ -84,13 +84,7 @@ public class GPSComputer {
 	}
 
 	public double averageSpeed() {
-		double[] heyhey = speeds();
-		double average = 0;
-		for(double i : heyhey){
-			average += i;
-		}
-
-		return Arrays.stream(heyhey).sum() / heyhey.length;
+		return totalDistance() / totalTime() * 3.6;
 	}
 
 	/*
