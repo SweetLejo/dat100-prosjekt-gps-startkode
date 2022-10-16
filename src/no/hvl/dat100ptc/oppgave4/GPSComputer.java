@@ -133,13 +133,6 @@ public class GPSComputer {
 	public void displayStatistics() {
 
 		System.out.println("==============================================");
-
-		// TODO - START
-
-		throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - SLUTT
-		
 	}
 
 }
