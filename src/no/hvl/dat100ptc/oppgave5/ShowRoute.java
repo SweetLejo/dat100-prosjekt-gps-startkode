@@ -67,7 +67,7 @@ public class ShowRoute extends EasyGraphics {
 		
 		setColor(0,255,0);
 		
-		for (int i = 0; i < gpspoints.length; i++) {
+		for (int i = 1; i < gpspoints.length; i++) {
 			int lon1 = ((int)xstep() * (int)gpspoints[i-1].getLongitude()) + MARGIN;
 			int lat1 = ((int)ystep() * (int)gpspoints[i-1].getLatitude()) + ybase;		
 			int lon2 = ((int)xstep() * (int)gpspoints[i].getLongitude()) + MARGIN;

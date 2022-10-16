@@ -6,6 +6,7 @@ import no.hvl.dat100ptc.TODO;
 import no.hvl.dat100ptc.oppgave1.GPSPoint;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 public class GPSUtils {
 
@@ -104,10 +105,9 @@ public class GPSUtils {
 	private static int TEXTWIDTH = 10;
 
 	public static String formatDouble(double d) {
+		
+		String dstr = String.format(Locale.ENGLISH, "%10.2f", d);
 
-		DecimalFormat f = new DecimalFormat("##.00");
-
-		return String.format(f.format(d));
-
+		return dstr;
 	}
 }
