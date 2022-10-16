@@ -7,7 +7,7 @@ import no.hvl.dat100ptc.oppgave2.GPSDataConverter;
 import no.hvl.dat100ptc.oppgave2.GPSDataFileReader;
 import no.hvl.dat100ptc.oppgave3.GPSUtils;
 
-import java.util.Arrays;
+//import java.util.Arrays;
 
 public class GPSComputer {
 	
@@ -105,27 +105,27 @@ public class GPSComputer {
 		double kcal;
 
 		// MET: Metabolic equivalent of task angir (kcal x kg-1 x h-1)
-		double met = 0;		
+		double met = 4.0;
 		double speedmph = speed * MS;
 
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
+		if (speedmph >= 10 && speedmph < 12){
+			met = 6.0;
+		} else if (speedmph >= 12 && speedmph < 14) {
+			met = 8.0;
+		} else if (speedmph >= 14 && speedmph < 16) {
+			met = 10.0;
+		} else if (speedmph >= 16 && speedmph < 20) {
+			met = 16.0;
+		} else {
+			met = 16.0;
+		}
 
-		// TODO - SLUTT
-		
+		return met * weight * (secs / 3600.0);
 	}
 
 	public double totalKcal(double weight) {
 
-		double totalkcal = 0;
-
-		// TODO - START
-		
-		throw new UnsupportedOperationException(TODO.method());
-
-		// TODO - SLUTT
-		
+		return kcal(weight, totalTime(), averageSpeed());
 	}
 	
 	private static double WEIGHT = 80.0;
