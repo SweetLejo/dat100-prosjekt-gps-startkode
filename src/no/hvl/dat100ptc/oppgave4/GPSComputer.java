@@ -133,6 +133,21 @@ public class GPSComputer {
 	public void displayStatistics() {
 
 		System.out.println("==============================================");
-	}
+
+		String timeStr =      "Total time     : " + GPSUtils.formatTime(totalTime());;
+		String distanceStr =  "Total distance : " + GPSUtils.formatDouble(totalDistance()) + " km";
+		String elevationStr = "Total elevation: " + GPSUtils.formatDouble(totalElevation()) + " m";
+		String maxspeedStr =  "Max speed      : " + GPSUtils.formatDouble(maxSpeed()) + " km/t";
+		String avgspeedStr =  "Average speed  : " + GPSUtils.formatDouble(averageSpeed()) + "kmt/t";
+		String energyStr =    "Energy         : " + GPSUtils.formatDouble(totalKcal(WEIGHT)) + "kcal";
+
+		System.out.println(timeStr);
+		System.out.println(distanceStr);
+		System.out.println(elevationStr);
+		System.out.println(maxspeedStr);
+		System.out.println(avgspeedStr);
+		System.out.println(energyStr);
+
+}
 
 }
