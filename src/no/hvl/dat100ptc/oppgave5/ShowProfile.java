@@ -52,7 +52,7 @@ public class ShowProfile extends EasyGraphics {
 		setColor(0,0,255);
 
 		for (GPSPoint i : gpspoints) {
-			int height = (int)i.getElevation();
+			int height = ybase - (int)i.getElevation();
 			
 			if (height>0) 
 				drawLine(x,ybase,x,height);
