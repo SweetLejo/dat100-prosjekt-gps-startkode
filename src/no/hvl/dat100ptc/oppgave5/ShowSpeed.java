@@ -54,22 +54,22 @@ public class ShowSpeed extends EasyGraphics {
 		int speedsum = 0;
 		
 		while (i < N) {
-			int speed = (int)speeds[i];
+			int speed = ybase - (int)speeds[i];
 			
 			setColor(0,0,255);
 			drawLine(x,ybase,x,speed);
 			
 			i++;
 			speedsum += speed;
-			int avgspeed = speedsum / i;
-			
-			setColor(0,255,0);
-			drawLine(MARGIN,ybase,x,avgspeed);
-			
-			x++;
-			pause(10);
+
+			x = x + 2;
+			pause(1);
 		}
 	
-		// TODO - SLUTT
+		int avgspeed = speedsum / i;
+		
+		setColor(0,255,0);
+		drawLine(MARGIN,avgspeed,x,avgspeed);
+		
 	}
 }

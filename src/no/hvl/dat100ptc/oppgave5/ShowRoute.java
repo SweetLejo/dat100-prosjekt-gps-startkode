@@ -71,7 +71,7 @@ public class ShowRoute extends EasyGraphics {
 		
 		for (GPSPoint i : gpspoints) {
 			double lon = (xstep() * (i.getLongitude() - gpspoints[0].getLongitude())) + MARGIN;
-			double lat = (ystep() * (i.getLatitude() - gpspoints[0].getLatitude())) + ybase - MARGIN;
+			double lat = (ystep() * (i.getLatitude() - gpspoints[0].getLatitude())) - MARGIN + ybase;
 			
 			fillCircle((int)lon,(int)lat, 4);
 			pause(10);
