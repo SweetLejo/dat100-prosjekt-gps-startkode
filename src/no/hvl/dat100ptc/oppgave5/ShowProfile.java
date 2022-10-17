@@ -57,7 +57,7 @@ public class ShowProfile extends EasyGraphics {
 			if (height>0) 
 				drawLine(x,ybase,x,height);
 			
-			x++;
+			x = x + 2;
 			pause(10);
 		}
 	

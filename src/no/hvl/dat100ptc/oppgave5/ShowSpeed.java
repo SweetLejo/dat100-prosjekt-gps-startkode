@@ -64,7 +64,7 @@ public class ShowSpeed extends EasyGraphics {
 			int avgspeed = speedsum / i;
 			
 			setColor(0,255,0);
-			drawLine(MARGIN,avgspeed,x,avgspeed);
+			drawLine(MARGIN,ybase,x,avgspeed);
 			
 			x++;
 			pause(10);

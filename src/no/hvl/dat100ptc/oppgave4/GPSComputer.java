@@ -138,8 +138,8 @@ public class GPSComputer {
 		String distanceStr =  "Total distance : " + GPSUtils.formatDouble(totalDistance()) + " km";
 		String elevationStr = "Total elevation: " + GPSUtils.formatDouble(totalElevation()) + " m";
 		String maxspeedStr =  "Max speed      : " + GPSUtils.formatDouble(maxSpeed()) + " km/t";
-		String avgspeedStr =  "Average speed  : " + GPSUtils.formatDouble(averageSpeed()) + "kmt/t";
-		String energyStr =    "Energy         : " + GPSUtils.formatDouble(totalKcal(WEIGHT)) + "kcal";
+		String avgspeedStr =  "Average speed  : " + GPSUtils.formatDouble(averageSpeed()) + " kmt/t";
+		String energyStr =    "Energy         : " + GPSUtils.formatDouble(totalKcal(WEIGHT)) + " kcal";
 
 		System.out.println(timeStr);
 		System.out.println(distanceStr);
