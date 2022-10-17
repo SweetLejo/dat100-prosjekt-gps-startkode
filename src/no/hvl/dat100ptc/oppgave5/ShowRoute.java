@@ -65,13 +65,11 @@ public class ShowRoute extends EasyGraphics {
 
 	public void showRouteMap(int ybase) {
 		
-		ybase -= GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints));
-		
 		setColor(0,255,0);
 		
 		for (GPSPoint i : gpspoints) {
-			double lon = (xstep() * (i.getLongitude() - gpspoints[0].getLongitude())) + MARGIN;
-			double lat = (ystep() * (i.getLatitude() - gpspoints[0].getLatitude())) - MARGIN + ybase;
+			double lon = MARGIN + (xstep() * (i.getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
+			double lat = ybase - (ystep() * (i.getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));
 			
 			fillCircle((int)lon,(int)lat, 4);
 			pause(10);
