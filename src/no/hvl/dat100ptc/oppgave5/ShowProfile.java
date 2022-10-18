@@ -47,11 +47,15 @@ public class ShowProfile extends EasyGraphics {
 		// ybase indicates the position on the y-axis where the columns should start
 	
 		int x = MARGIN,y;
+<<<<<<< HEAD
 
 		String timeStr =      "Time        : ";
 		int currenttime = drawString(timeStr,MARGIN,MARGIN);
+=======
+>>>>>>> refs/heads/master
 		
 		int timescale = Integer.parseInt(getText("Tidskalering: "));
+<<<<<<< HEAD
 		
 		for (int i = 0; i < gpspoints.length; i++) {
 			setVisible(currenttime, false);
@@ -63,13 +67,37 @@ public class ShowProfile extends EasyGraphics {
 			int elevation = (int)gpspoints[i].getElevation();
 			if (elevation>0) 
 				drawLine(x,ybase + MARGIN,x,elevation + MARGIN);
+=======
 
+		setColor(0,0,255);
+>>>>>>> refs/heads/master
+
+<<<<<<< HEAD
 			x = x + 2;
+=======
+		for (int i = 0; i < gpspoints.length; i++) {
+			int elevation = (int)gpspoints[i].getElevation();
+>>>>>>> refs/heads/master
 			
+<<<<<<< HEAD
 			if (i < gpspoints.length - 1) {
 				int pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) * 1000 / timescale;
 				pause(pausetime);	
 			}	
+=======
+			if (elevation>0) 
+				drawLine(x,ybase,x,elevation);
+			x++;
+			
+			if (i < gpspoints.length - 1) {
+				int pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) * 10 / timescale;
+				pause(pausetime);
+			}
+>>>>>>> refs/heads/master
 		}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> refs/heads/master
 	}
 }

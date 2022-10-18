@@ -32,11 +32,19 @@ public class GPSComputer {
 	public double totalDistance() {
 
 		double distance = 0;
+<<<<<<< HEAD
 
 		for(int i = 0; i < gpspoints.length-1; i++){
 			distance += GPSUtils.distance(gpspoints[i], gpspoints[i+1]);
 		}
 
+=======
+		
+		for (int i = 1; i < gpspoints.length; i++) {
+			distance += GPSUtils.distance(gpspoints[i-1], gpspoints[i]);
+		}
+		
+>>>>>>> refs/heads/master
 		return distance;
 	}
 
@@ -51,6 +59,7 @@ public class GPSComputer {
 	// beregn total tiden for hele turen (i sekunder)
 	public int totalTime() {
 
+<<<<<<< HEAD
 		/* uncomment if list is not sorted after time
 		Arrays.sort(gpspoints,
 				(a, b) -> {
@@ -58,28 +67,68 @@ public class GPSComputer {
 				});
 		*/
 		return gpspoints[gpspoints.length-1].getTime() - gpspoints[0].getTime();
+=======
+		int t1 = gpspoints[0].getTime();
+		int t2 = gpspoints[gpspoints.length - 1].getTime();
+		
+		int totalt = t2 - t1;
+		
+		return totalt;
+>>>>>>> refs/heads/master
 	}
 		
 	// beregn gjennomsnitshastighets mellom hver av gps punktene
 
 	public double[] speeds() {
 		
+<<<<<<< HEAD
 		double[] speeds = new double[gpspoints.length-1];
 
 		for(int i =1; i < gpspoints.length; i++){
 			speeds[i-1] += GPSUtils.speed(gpspoints[i-1], gpspoints[i]);
 		}
+=======
+		double[] speeds = new double[gpspoints.length - 1];
+		
+		for (int i = 0; i < speeds.length - 1; i++) {
+			speeds[i] = GPSUtils.speed(gpspoints[i], gpspoints[i + 1]);
+		}
+		
+>>>>>>> refs/heads/master
 		return speeds;
 	}
 	
 	public double maxSpeed() {
 		
+<<<<<<< HEAD
 		return GPSUtils.findMax(speeds());
 
+=======
+		double maxspeed = 0;
+		
+		maxspeed = GPSUtils.findMax(speeds());
+		
+		return maxspeed;
+>>>>>>> refs/heads/master
 	}
 
 	public double averageSpeed() {
+<<<<<<< HEAD
 		return totalDistance() / totalTime() * 3.6;
+=======
+
+		double average = 0;
+		int i = 0;
+		
+		while (i < gpspoints.length - 1) {
+			average += GPSUtils.speed(gpspoints[i], gpspoints[i + 1]);
+			i++;
+		}
+		average = average / i;
+		
+		return average;
+		
+>>>>>>> refs/heads/master
 	}
 
 	/*
@@ -129,6 +178,7 @@ public class GPSComputer {
 
 		System.out.println("==============================================");
 
+<<<<<<< HEAD
 		String timeStr =      "Total time     : " + GPSUtils.formatTime(totalTime());;
 		String distanceStr =  "Total distance : " + GPSUtils.formatDouble(totalDistance()) + " km";
 		String elevationStr = "Total elevation: " + GPSUtils.formatDouble(totalElevation()) + " m";
@@ -143,6 +193,42 @@ public class GPSComputer {
 		System.out.println(avgspeedStr);
 		System.out.println(energyStr);
 
+=======
+		String timeStr =      "Total time     : " + GPSUtils.formatTime(totalTime());; 
+		String distanceStr =  "Total distance : " + GPSUtils.formatDouble(totalDistance()) + " km";
+		String elevationStr = "Total elevation: " + GPSUtils.formatDouble(totalElevation()) + " m";
+		String maxspeedStr =  "Max speed      : " + GPSUtils.formatDouble(maxSpeed()) + " km/t";
+		String avgspeedStr =  "Average speed  : " + GPSUtils.formatDouble(averageSpeed()) + "kmt/t";
+		String energyStr =    "Energy         : " + GPSUtils.formatDouble(totalKcal(WEIGHT)) + "kcal";		
+		
+		System.out.println(timeStr);
+		System.out.println(distanceStr);
+		System.out.println(elevationStr);
+		System.out.println(maxspeedStr);
+		System.out.println(avgspeedStr);
+		System.out.println(energyStr);
+	}
+	
+	public double[] climbs() {
+		
+		double[] inclines = new double[gpspoints.length - 1];
+		
+		for(int i = 0; i < inclines.length; i++) {
+			double elevation = gpspoints[i+1].getElevation() + gpspoints[i].getElevation();
+			double distance = GPSUtils.distance(gpspoints[i], gpspoints[i+1]);
+			
+			inclines[i] = elevation / distance;
+		}
+		
+		return inclines;
+	}
+	
+	public double maxClimb() {
+		
+		double maxincline = GPSUtils.findMax(climbs());
+		
+		return maxincline;
+>>>>>>> refs/heads/master
 	}
 
 	public double[] climbs() {

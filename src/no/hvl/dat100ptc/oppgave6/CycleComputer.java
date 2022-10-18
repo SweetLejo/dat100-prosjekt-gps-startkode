@@ -69,6 +69,7 @@ public class CycleComputer extends EasyGraphics {
 	public void bikeRoute() {
 		
 		int timescale = 10 * Integer.parseInt(getText("Tidskalering: "));
+<<<<<<< HEAD
 			
 		int ybase = ROUTEMAPYSIZE + HEIGHTSIZE + SPACE;
 		
@@ -114,7 +115,21 @@ public class CycleComputer extends EasyGraphics {
 			int elevation = (int)gpspoints[i].getElevation();
 			if (elevation>0) 
 				drawLine(x,HEIGHTSIZE + SPACE - MARGIN,x,elevation + MARGIN);
+=======
+		int pausetime;
+		
+		int size = ((int)xstep() * (int)ystep()) / 2; 
+		
+		int ref = (int)gpspoints[0].getElevation();
+		
+		int x = MARGIN;
+		
+		for (int i = 0; i < gpspoints.length; i++) {		
+			int lon = ((int)xstep() * (int)gpspoints[i].getLongitude()) + MARGIN;
+			int lat = ((int)ystep() * (int)gpspoints[i].getLatitude()) + MARGIN;		
+>>>>>>> refs/heads/master
 
+<<<<<<< HEAD
 			x = x + 2;
 			
 			int pausetime = (gpspoints[i].getTime() - gpspoints[i - 1].getTime()) * 1000 / timescale;
@@ -122,6 +137,31 @@ public class CycleComputer extends EasyGraphics {
 			
 			setVisible(currenttime, false);
 			setVisible(currentspeed, false);
+=======
+			int elevation = (int)gpspoints[i].getElevation();
+			
+			if (elevation < ref) 
+				setColor(255,0,0);
+			else 
+				setColor(0,255,0);
+			fillCircle(lon,lat,size);	
+			ref = elevation;
+			
+			setColor(0,0,255);
+			drawLine(x,ROUTEMAPYSIZE + SPACE,x,elevation);
+			x++;
+			
+			String timeStr =  "Time           : " + GPSUtils.formatTime(gpspoints[i].getTime());		
+			drawString(timeStr,MARGIN,ROUTEMAPYSIZE + HEIGHTSIZE - MARGIN);
+			
+			double[] speeds = gpscomp.speeds();
+			String speedStr = "Speed          : " + GPSUtils.formatDouble(speeds[i]);
+			drawString(speedStr,MARGIN,ROUTEMAPYSIZE + HEIGHTSIZE - (MARGIN*2));
+			
+			pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) / timescale;
+			
+			pause(pausetime);
+>>>>>>> refs/heads/master
 		}
 	}
 
