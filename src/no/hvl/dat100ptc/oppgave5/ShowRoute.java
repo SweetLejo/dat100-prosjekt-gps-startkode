@@ -65,16 +65,38 @@ public class ShowRoute extends EasyGraphics {
 
 	public void showRouteMap(int ybase) {
 		
+		int timescale = Integer.parseInt(getText("Tidskalering: "));
+		
 		setColor(0,255,0);
 		
-		for (GPSPoint i : gpspoints) {
-			double lon = MARGIN + (xstep() * (i.getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
-			double lat = ybase - (ystep() * (i.getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));
-			
-			fillCircle((int)lon,(int)lat, 4);
-			pause(10);
+		//løkke som tegner ruten med linjer	
+		for (int i = 0; i < gpspoints.length - 1; i++) {
+			double lon1 = MARGIN + (xstep() * (gpspoints[i].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
+			double lon2 = MARGIN + (xstep() * (gpspoints[i + 1].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
+			double lat1 = ybase - (ystep() * (gpspoints[i].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));	
+			double lat2 = ybase - (ystep() * (gpspoints[i + 1].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));
+		
+			drawLine((int)lon1,(int)lat1,(int)lon2,(int)lat2);
 		}
 		
+		setColor(0,0,255);
+		int currentpoint = fillCircle((int)gpspoints[0].getLongitude(),(int)gpspoints[0].getLatitude(), 4);
+		
+		//løkke tegner hvor man er på ruten
+		for (int i = 0; i < gpspoints.length - 1; i++) {
+			setColor(0,0,0);
+			String timeStr =      "Time        : " + GPSUtils.formatTime(gpspoints[i].getTime());
+			int currenttime = drawString(timeStr,MARGIN,MARGIN);
+			
+			double lon = MARGIN + (xstep() * (gpspoints[i].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
+			double lat = ybase - (ystep() * (gpspoints[i].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));
+			
+			moveCircle(currentpoint,(int)lon,(int)lat);
+			
+			int pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) * 1000 / timescale;
+			pause(pausetime);	
+			setVisible(currenttime, false);
+		}
 	}
 
 	public void showStatistics() {
@@ -99,7 +121,6 @@ public class ShowRoute extends EasyGraphics {
 		drawString(maxspeedStr,MARGIN,TEXTDISTANCE * 4);
 		drawString(avgspeedStr,MARGIN,TEXTDISTANCE * 5);
 		drawString(energyStr,MARGIN,TEXTDISTANCE * 6);
-		
 	}
 
 }
