@@ -6,6 +6,7 @@ import no.hvl.dat100ptc.oppgave1.GPSPoint;
 import no.hvl.dat100ptc.oppgave2.GPSData;
 import no.hvl.dat100ptc.oppgave2.GPSDataConverter;
 import no.hvl.dat100ptc.oppgave2.GPSDataFileReader;
+import no.hvl.dat100ptc.oppgave3.GPSUtils;
 import no.hvl.dat100ptc.oppgave4.GPSComputer;
 
 import javax.swing.JOptionPane;
@@ -35,7 +36,7 @@ public class ShowProfile extends EasyGraphics {
 
 		int N = gpspoints.length; // number of data points
 
-		makeWindow("Height profile", 2 * MARGIN + 3 * N, 2 * MARGIN + MAXBARHEIGHT);
+		makeWindow("Height profile",2 * MARGIN + 3 * N, 3 * MARGIN + MAXBARHEIGHT);
 
 		// top margin + height of drawing area
 		showHeightProfile(MARGIN + MAXBARHEIGHT); 
@@ -46,24 +47,29 @@ public class ShowProfile extends EasyGraphics {
 		// ybase indicates the position on the y-axis where the columns should start
 	
 		int x = MARGIN,y;
+
+		String timeStr =      "Time        : ";
+		int currenttime = drawString(timeStr,MARGIN,MARGIN);
 		
 		int timescale = Integer.parseInt(getText("Tidskalering: "));
-
-		setColor(0,0,255);
-
+		
 		for (int i = 0; i < gpspoints.length; i++) {
-			int elevation = (int)gpspoints[i].getElevation();
+			setVisible(currenttime, false);
+			setColor(0,0,0);
+			timeStr =      "Time        : " + GPSUtils.formatTime(gpspoints[i].getTime());
+			currenttime = drawString(timeStr,MARGIN,MARGIN);
 			
+			setColor(0,0,255);
+			int elevation = (int)gpspoints[i].getElevation();
 			if (elevation>0) 
-				drawLine(x,ybase,x,elevation);
-			x++;
+				drawLine(x,ybase + MARGIN,x,elevation + MARGIN);
+
+			x = x + 2;
 			
 			if (i < gpspoints.length - 1) {
-				int pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) * 10 / timescale;
-				pause(pausetime);
-			}
+				int pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) * 1000 / timescale;
+				pause(pausetime);	
+			}	
 		}
-	
 	}
-
 }

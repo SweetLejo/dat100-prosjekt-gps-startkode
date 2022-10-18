@@ -58,36 +58,44 @@ public class ShowRoute extends EasyGraphics {
 		
 		double ystep = MAPYSIZE / (Math.abs(maxlat - minlat));
 		
-		return ystep;	
+		return ystep;
+
+		
 	}
 
 	public void showRouteMap(int ybase) {
 		
-		int size = ((int)xstep() * (int)ystep()) / 2; 
+		int timescale = Integer.parseInt(getText("Tidskalering: "));
 		
 		setColor(0,255,0);
 		
-		for (int i = 1; i < gpspoints.length; i++) {
-			int lon1 = ((int)xstep() * (int)gpspoints[i-1].getLongitude()) + MARGIN;
-			int lat1 = ((int)ystep() * (int)gpspoints[i-1].getLatitude()) + ybase;		
-			int lon2 = ((int)xstep() * (int)gpspoints[i].getLongitude()) + MARGIN;
-			int lat2 = ((int)ystep() * (int)gpspoints[i].getLatitude()) + ybase;	
-				
-			drawLine(lon1,lat1,lon2,lat2);
+		//løkke som tegner ruten med linjer	
+		for (int i = 0; i < gpspoints.length - 1; i++) {
+			double lon1 = MARGIN + (xstep() * (gpspoints[i].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
+			double lon2 = MARGIN + (xstep() * (gpspoints[i + 1].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
+			double lat1 = ybase - (ystep() * (gpspoints[i].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));	
+			double lat2 = ybase - (ystep() * (gpspoints[i + 1].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));
+		
+			drawLine((int)lon1,(int)lat1,(int)lon2,(int)lat2);
 		}
 		
 		setColor(0,0,255);
+		int currentpoint = fillCircle((int)gpspoints[0].getLongitude(),(int)gpspoints[0].getLatitude(), 4);
 		
-		int lon = ((int)xstep() * (int)gpspoints[0].getLongitude()) + MARGIN;
-		int lat = ((int)ystep() * (int)gpspoints[0].getLatitude()) + ybase;	
-		
-		int pos = fillCircle(lon,lat,size);
-		
-		for (int i = 1; i < gpspoints.length; i++) {
-			lon = ((int)xstep() * (int)gpspoints[i].getLongitude()) + MARGIN;
-			lat = ((int)ystep() * (int)gpspoints[i].getLatitude()) + ybase;	
+		//løkke tegner hvor man er på ruten
+		for (int i = 0; i < gpspoints.length - 1; i++) {
+			setColor(0,0,0);
+			String timeStr =      "Time        : " + GPSUtils.formatTime(gpspoints[i].getTime());
+			int currenttime = drawString(timeStr,MARGIN,MARGIN);
 			
-			moveCircle(pos,lon,lat);
+			double lon = MARGIN + (xstep() * (gpspoints[i].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
+			double lat = ybase - (ystep() * (gpspoints[i].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));
+			
+			moveCircle(currentpoint,(int)lon,(int)lat);
+			
+			int pausetime = (gpspoints[i + 1].getTime() - gpspoints[i].getTime()) * 1000 / timescale;
+			pause(pausetime);	
+			setVisible(currenttime, false);
 		}
 	}
 
@@ -98,23 +106,21 @@ public class ShowRoute extends EasyGraphics {
 		setColor(0,0,0);
 		setFont("Courier",12);
 		
-		
 		double weight = 80.00;
 		
-		String timeStr =      "Total time     : " + GPSUtils.formatTime(gpscomputer.totalTime());; 
-		String distanceStr =  "Total distance : " + GPSUtils.formatDouble(gpscomputer.totalDistance()) + " km";
-		String elevationStr = "Total elevation: " + GPSUtils.formatDouble(gpscomputer.totalElevation()) + " m";
-		String maxspeedStr =  "Max speed      : " + GPSUtils.formatDouble(gpscomputer.maxSpeed()) + " km/t";
-		String avgspeedStr =  "Average speed  : " + GPSUtils.formatDouble(gpscomputer.averageSpeed()) + "kmt/t";
-		String energyStr =    "Energy         : " + GPSUtils.formatDouble(gpscomputer.totalKcal(weight)) + "kcal";		
+		String timeStr =      "Total time        : " + GPSUtils.formatTime(gpscomputer.totalTime());
+		String distanceStr =  "Total distance    : " + GPSUtils.formatDouble(gpscomputer.totalDistance()) + " km";
+		String elevationStr = "Total elevation   : " + GPSUtils.formatDouble(gpscomputer.totalElevation()) + " m";
+		String maxspeedStr =  "Max speed         : " + GPSUtils.formatDouble(gpscomputer.maxSpeed()) + " km/t";
+		String avgspeedStr =  "Average speed     : " + GPSUtils.formatDouble(gpscomputer.averageSpeed()) + " kmt/t";
+		String energyStr =    "Energy            : " + GPSUtils.formatDouble(gpscomputer.totalKcal(weight)) + " kcal";		
 		
-		drawString(timeStr,MARGIN,MAPYSIZE - TEXTDISTANCE);
-		drawString(distanceStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 2));
-		drawString(elevationStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 3));
-		drawString(maxspeedStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 4));
-		drawString(avgspeedStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 5));
-		drawString(energyStr,MARGIN,MAPYSIZE - (TEXTDISTANCE * 6));
-		
+		drawString(timeStr,MARGIN,TEXTDISTANCE);
+		drawString(distanceStr,MARGIN,TEXTDISTANCE * 2);
+		drawString(elevationStr,MARGIN,TEXTDISTANCE * 3);
+		drawString(maxspeedStr,MARGIN,TEXTDISTANCE * 4);
+		drawString(avgspeedStr,MARGIN,TEXTDISTANCE * 5);
+		drawString(energyStr,MARGIN,TEXTDISTANCE * 6);
 	}
 
 }

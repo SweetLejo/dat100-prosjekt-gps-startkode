@@ -98,7 +98,7 @@ public class GPSUtils {
 		int minutes = (secs % 3600) / 60;
 		int sec = secs % 60;
 
-		timestr = String.format("  %02d:%02d:%02d", hours, minutes, sec);
+		timestr = String.format("%2s%02d:%02d:%02d"," ", hours, minutes, sec);
 		
 		return timestr;
 	}
