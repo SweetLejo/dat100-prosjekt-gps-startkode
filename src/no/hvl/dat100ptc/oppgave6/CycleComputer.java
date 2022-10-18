@@ -114,7 +114,7 @@ public class CycleComputer extends EasyGraphics {
 			setColor(0,0,0);
 			int currenttime = drawString(timeStr,MARGIN,MARGIN);
 			int currentspeed = drawString(speedStr,MARGIN, MARGIN * 2);
-			int currentspeed2 = drawString(speedStr,MARGIN, MARGIN * 3);
+			int currentspeed2 = drawString(speedStr2,MARGIN, MARGIN * 3);
 			
 			//person 1
 			double lon = MARGIN + (xstep() * (gpspoints[i].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
@@ -158,12 +158,13 @@ public class CycleComputer extends EasyGraphics {
 		
 		double weight = 80.00;
 		
-		String timeStr =      "Total time        : " + GPSUtils.formatTime(gpscomp.totalTime());
-		String distanceStr =  "Total distance    : " + GPSUtils.formatDouble(gpscomp.totalDistance()) + " km";
-		String elevationStr = "Total elevation   : " + GPSUtils.formatDouble(gpscomp.totalElevation()) + " m";
-		String maxspeedStr =  "Max speed         : " + GPSUtils.formatDouble(gpscomp.maxSpeed()) + " km/t";
-		String avgspeedStr =  "Average speed     : " + GPSUtils.formatDouble(gpscomp.averageSpeed()) + " kmt/t";
-		String energyStr =    "Energy            : " + GPSUtils.formatDouble(gpscomp.totalKcal(weight)) + " kcal";		
+		//person 1
+		String timeStr =      "Total time p1     : " + GPSUtils.formatTime(gpscomp2.totalTime());
+		String distanceStr =  "Total distance    : " + GPSUtils.formatDouble(gpscomp2.totalDistance()) + " km";
+		String elevationStr = "Total elevation   : " + GPSUtils.formatDouble(gpscomp2.totalElevation()) + " m";
+		String maxspeedStr =  "Max speed         : " + GPSUtils.formatDouble(gpscomp2.maxSpeed()) + " km/t";
+		String avgspeedStr =  "Average speed     : " + GPSUtils.formatDouble(gpscomp2.averageSpeed()) + " kmt/t";
+		String energyStr =    "Energy            : " + GPSUtils.formatDouble(gpscomp2.totalKcal(weight)) + " kcal";		
 		
 		drawString(timeStr,MARGIN,TEXTDISTANCE);
 		drawString(distanceStr,MARGIN,TEXTDISTANCE * 2);
@@ -172,12 +173,13 @@ public class CycleComputer extends EasyGraphics {
 		drawString(avgspeedStr,MARGIN,TEXTDISTANCE * 5);
 		drawString(energyStr,MARGIN,TEXTDISTANCE * 6);
 		
-		String timeStr2 =      "Total time        : " + GPSUtils.formatTime(gpscomp.totalTime());
-		String distanceStr2 =  "Total distance    : " + GPSUtils.formatDouble(gpscomp.totalDistance()) + " km";
-		String elevationStr2 = "Total elevation   : " + GPSUtils.formatDouble(gpscomp.totalElevation()) + " m";
-		String maxspeedStr2 =  "Max speed         : " + GPSUtils.formatDouble(gpscomp.maxSpeed()) + " km/t";
-		String avgspeedStr2 =  "Average speed     : " + GPSUtils.formatDouble(gpscomp.averageSpeed()) + " kmt/t";
-		String energyStr2 =    "Energy            : " + GPSUtils.formatDouble(gpscomp.totalKcal(weight)) + " kcal";		
+		//person 2
+		String timeStr2 =      "Total time p2     : " + GPSUtils.formatTime(gpscomp2.totalTime());
+		String distanceStr2 =  "Total distance    : " + GPSUtils.formatDouble(gpscomp2.totalDistance()) + " km";
+		String elevationStr2 = "Total elevation   : " + GPSUtils.formatDouble(gpscomp2.totalElevation()) + " m";
+		String maxspeedStr2 =  "Max speed         : " + GPSUtils.formatDouble(gpscomp2.maxSpeed()) + " km/t";
+		String avgspeedStr2 =  "Average speed     : " + GPSUtils.formatDouble(gpscomp2.averageSpeed()) + " kmt/t";
+		String energyStr2 =    "Energy            : " + GPSUtils.formatDouble(gpscomp2.totalKcal(weight)) + " kcal";		
 		
 		drawString(timeStr2,MARGIN + 400,TEXTDISTANCE);
 		drawString(distanceStr2,MARGIN + 400,TEXTDISTANCE * 2);
