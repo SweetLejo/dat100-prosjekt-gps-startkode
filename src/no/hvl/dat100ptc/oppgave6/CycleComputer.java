@@ -23,6 +23,8 @@ public class CycleComputer extends EasyGraphics {
 
 	private GPSComputer gpscomp;
 	private GPSPoint[] gpspoints;
+	private GPSComputer gpscomp2;
+	private GPSPoint[] gpspoints2;
 	
 	private int N = 0;
 
@@ -36,6 +38,11 @@ public class CycleComputer extends EasyGraphics {
 
 		gpscomp = new GPSComputer(filename);
 		gpspoints = gpscomp.getGPSPoints();
+
+		filename = JOptionPane.showInputDialog("GPS data filnavn 2: ");
+		
+		gpscomp2 = new GPSComputer(filename);
+		gpspoints2 = gpscomp.getGPSPoints();
 
 	}
 
@@ -58,10 +65,11 @@ public class CycleComputer extends EasyGraphics {
 
 		makeWindow("Cycle Computer", 
 				2 * MARGIN + ROUTEMAPXSIZE,
-				2 * MARGIN + ROUTEMAPYSIZE + HEIGHTSIZE + SPACE);
+				2 * MARGIN + ROUTEMAPYSIZE + HEIGHTSIZE + TEXTWIDTH + SPACE);
 
 		bikeRoute();
 		
+		showStatistics();
 		showStatistics();
 
 	}
@@ -70,9 +78,9 @@ public class CycleComputer extends EasyGraphics {
 		
 		int timescale = 10 * Integer.parseInt(getText("Tidskalering: "));
 			
-		int ybase = ROUTEMAPYSIZE + HEIGHTSIZE + SPACE;
+		int ybase = ROUTEMAPYSIZE + HEIGHTSIZE + SPACE + TEXTWIDTH;
 		
-		int x = MARGIN + TEXTWIDTH;
+		int x = MARGIN;
 		
 		//løkke som tegner ruten med linjer.
 		for (int i = 0; i < gpspoints.length - 1; i++) {
@@ -95,16 +103,20 @@ public class CycleComputer extends EasyGraphics {
 		setColor(0,0,255);
 		setFont("Courier",12);
 		int currentpoint = fillCircle((int)gpspoints[0].getLongitude(),(int)gpspoints[0].getLatitude(), 4);
+		int currentpoint2 = fillCircle((int)gpspoints2[0].getLongitude(),(int)gpspoints2[0].getLatitude(), 4);
 		
 		//løkke som viser ruten i skalert realtid
 		for (int i = 1; i < gpspoints.length; i++) {
 			String timeStr =      "Time        : " + GPSUtils.formatTime(gpspoints[i].getTime());
-			String speedStr =     "Speed       : " + GPSUtils.formatDouble(GPSUtils.speed(gpspoints[i - 1], gpspoints[i]));
+			String speedStr =     "Speed p1    : " + GPSUtils.formatDouble(GPSUtils.speed(gpspoints[i - 1], gpspoints[i]));
+			String speedStr2 =    "Speed p2    : " + GPSUtils.formatDouble(GPSUtils.speed(gpspoints2[i - 1], gpspoints2[i]));
 			
 			setColor(0,0,0);
 			int currenttime = drawString(timeStr,MARGIN,MARGIN);
 			int currentspeed = drawString(speedStr,MARGIN, MARGIN * 2);
+			int currentspeed2 = drawString(speedStr,MARGIN, MARGIN * 3);
 			
+			//person 1
 			double lon = MARGIN + (xstep() * (gpspoints[i].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints))));
 			double lat = ybase - (ystep() * (gpspoints[i].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints))));
 			
@@ -113,8 +125,19 @@ public class CycleComputer extends EasyGraphics {
 			setColor(0,0,255);
 			int elevation = (int)gpspoints[i].getElevation();
 			if (elevation>0) 
-				drawLine(x,HEIGHTSIZE + SPACE - MARGIN,x,elevation + MARGIN);
-
+				drawLine(x,HEIGHTSIZE + SPACE - MARGIN + TEXTWIDTH,x,elevation + MARGIN + TEXTWIDTH);
+			
+			//person 2
+			double lon2 = MARGIN + (xstep() * (gpspoints2[i].getLongitude() - GPSUtils.findMin(GPSUtils.getLongitudes(gpspoints2))));
+			double lat2 = ybase - (ystep() * (gpspoints2[i].getLatitude() - GPSUtils.findMin(GPSUtils.getLatitudes(gpspoints2))));
+			
+			moveCircle(currentpoint2,(int)lon2,(int)lat2);
+			
+			setColor(0,0,255);
+			int elevation2 = (int)gpspoints2[i].getElevation();
+			if (elevation2>0) 
+				drawLine(x + 400,HEIGHTSIZE + SPACE - MARGIN + TEXTWIDTH,x + 400,elevation + MARGIN + TEXTWIDTH);
+			
 			x = x + 2;
 			
 			int pausetime = (gpspoints[i].getTime() - gpspoints[i - 1].getTime()) * 1000 / timescale;
@@ -122,9 +145,10 @@ public class CycleComputer extends EasyGraphics {
 			
 			setVisible(currenttime, false);
 			setVisible(currentspeed, false);
+			setVisible(currentspeed2, false);
 		}
 	}
-
+	
 	public void showStatistics() {
 
 		int TEXTDISTANCE = 20;
@@ -147,6 +171,20 @@ public class CycleComputer extends EasyGraphics {
 		drawString(maxspeedStr,MARGIN,TEXTDISTANCE * 4);
 		drawString(avgspeedStr,MARGIN,TEXTDISTANCE * 5);
 		drawString(energyStr,MARGIN,TEXTDISTANCE * 6);
+		
+		String timeStr2 =      "Total time        : " + GPSUtils.formatTime(gpscomp.totalTime());
+		String distanceStr2 =  "Total distance    : " + GPSUtils.formatDouble(gpscomp.totalDistance()) + " km";
+		String elevationStr2 = "Total elevation   : " + GPSUtils.formatDouble(gpscomp.totalElevation()) + " m";
+		String maxspeedStr2 =  "Max speed         : " + GPSUtils.formatDouble(gpscomp.maxSpeed()) + " km/t";
+		String avgspeedStr2 =  "Average speed     : " + GPSUtils.formatDouble(gpscomp.averageSpeed()) + " kmt/t";
+		String energyStr2 =    "Energy            : " + GPSUtils.formatDouble(gpscomp.totalKcal(weight)) + " kcal";		
+		
+		drawString(timeStr2,MARGIN + 400,TEXTDISTANCE);
+		drawString(distanceStr2,MARGIN + 400,TEXTDISTANCE * 2);
+		drawString(elevationStr2,MARGIN + 400,TEXTDISTANCE * 3);
+		drawString(maxspeedStr2,MARGIN + 400,TEXTDISTANCE * 4);
+		drawString(avgspeedStr2,MARGIN + 400,TEXTDISTANCE * 5);
+		drawString(energyStr2,MARGIN + 400,TEXTDISTANCE * 6);
 	}
 	
 	public double xstep() {
